@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ligados na Alameda Yayá</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Ligados na Alameda Yayá</h1>
+    <p class="slogan">Conectando você às informações do bairro</p> <!-- Slogan adicionado -->
+    <nav>
+      <ul>
+        <li><a href="#comercio">Alameda Yayá</a></li>
+        <li><a href="#movimentacao">Comércio e Movimentação</a></li>
+        <li><a href="#feedback">Adicionar Informações</a></li>
+        <li><a href="#sobre">Sobre o Projeto</a></li>
+        <li><a href="#Horários">Horários</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="comercio">
+      <h2>Alameda Yayá</h2>
+      <p>A Alameda Yayá é uma rua localizada no bairro Jardim Aida. Embora não seja uma das vias mais conhecidas da cidade, ela desempenha um papel importante na conexão entre os bairros Jardim aida, Gopoúva e Vila Hulda. Ela também oferece diversos serviços aos moradores da região.</p>
+    </section>
+
+    <section id="movimentacao">
+      <h2>Comércio e Movimentação da rua</h2>
+      <p>A alameda é bastante movimentada, com um público variado, predominando adultos entre 20 e 45 anos, além de um número significativo de idosos, por conta de seu asilo na região. A presença de comércios torna o local ainda mais movimentado, por seu horário comercial se iniciar por volta das 08:00, finalizando somente as 21:00. A alameda yayá conta com comércios variados, de pequenas farmácias e lojas de roupa, até mesmo supermercados e cabelereiros, como o Mister Dom, e o supermercado Fonte Nova.</p>
+    </section>
+
+    <section id="feedback">
+      <h2>Adicionar Informações</h2>
+      <form id="feedback-form">
+        <label for="nomeComercio">Nome do Comércio ou Serviço:</label><br>
+        <input type="text" id="nomeComercio" name="nomeComercio" required placeholder="Digite o nome do comércio"><br><br>
+        
+        <label for="descricao">Comentário sobre o Comércio/Serviço:</label><br>
+        <textarea id="descricao" name="descricao" rows="4" required placeholder="Fale sobre o comércio ou serviço"></textarea><br><br>
+        
+        <button type="submit">Enviar</button>
+      </form>
+      
+      <h3>Informações Adicionadas:</h3>
+      <ul id="feedback-list"></ul>
+    </section>
+
+    <section id="sobre">
+      <h2>Sobre o Projeto</h2>
+      <p>Este site foi criado para informar novos moradores e visitantes sobre a alameda e sua dinâmica. Esperamos que essas informações ajudem a conhecer melhor a região, e que possamos divulgar mais sobre o comércio local.</p>
+    </section>
+
+    <section id="Horários">
+        <h2>Horários</h2>
+        <p>Os horários comerciais variam bastante, podendo começar as 6:00, as 7:00 e 10:00, finalizando até 21:00 e 22:00. Veja a seguir alguns lugares do bairro mais conhecidos com seus horários:</p>
+        <p>Supermercado Matsuo: Das 07:00 às 20:00</p>
+        <p>Padaria Europan: Das 06:00 às 22:00</p>
+        <p>Perfumaria Kaori: Das 10:00 às 18:00</p>
+        <p>Farmácia Farma Conde: Das 07:00 às 22:00</p>
+        <p>Barbearia Club Dollar: Das 09:00 às 21:00</p>
+        <p>Pizzaria Yayá: Das 18:00 às 00:00</p>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Alameda Informativa. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
