@@ -1,74 +1,67 @@
-// Função para lidar com o envio do formulário
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('feedback-form');
-    const feedbackList = document.getElementById('feedback-list');
-  
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-  
-      // Capturar os dados do formulário
-      const nomeComercio = document.getElementById('nomeComercio').value;
-      const descricao = document.getElementById('descricao').value;
-  
-      // Criar um novo item para a lista
-      const listItem = document.createElement('li');
-      listItem.innerHTML = `<strong>${nomeComercio}:</strong> ${descricao}`;
-  
-      // Adicionar o item à lista
-      feedbackList.appendChild(listItem);
-  
-      // Limpar os campos do formulário
-      form.reset();
-    });
-  });
-  
-  // Selecionar elementos
-const form = document.getElementById("feedback-form");
-const feedbackList = document.getElementById("feedback-list");
+  const form = document.getElementById('feedback-form');
+  const feedbackList = document.getElementById('feedback-list');
 
-// Carregar dados do localStorage ao carregar a página
-document.addEventListener("DOMContentLoaded", () => {
-  const feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
-  feedbacks.forEach(addFeedbackToList);
-});
+  // URL do webhook gerado pelo Apps Script
+  const webhookUrl = "https://script.google.com/macros/s/AKfycbwZ3ddBE4m61SESUcBUhtcdYGuXx9mQitNaIsgNyDenJBTmMc2U4Bt4VaUQ29qpklUMYg/exec";
 
-// Adicionar evento de envio do formulário
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  // Obter dados do formulário
-  const nomeComercio = document.getElementById("nomeComercio").value.trim();
-  const descricao = document.getElementById("descricao").value.trim();
-
-  if (nomeComercio === "" || descricao === "") {
-    alert("Por favor, preencha todos os campos.");
-    return;
+  // Carregar dados do servidor e exibir na lista
+  async function carregarFeedbacks() {
+    try {
+      const response = await fetch(webhookUrl); // Busca os dados do servidor
+      const feedbacks = await response.json(); // Supõe que o Apps Script já suporte GET
+      feedbackList.innerHTML = ""; // Limpa a lista antes de adicionar novos itens
+      feedbacks.forEach(addFeedbackToList);
+    } catch (error) {
+      console.error("Erro ao carregar os feedbacks:", error);
+    }
   }
 
-  // Criar objeto de feedback
-  const feedback = {
-    nomeComercio,
-    descricao,
-  };
+  // Enviar dados do formulário ao servidor
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-  // Salvar no localStorage
-  const feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
-  feedbacks.push(feedback);
-  localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
+    const nomeComercio = document.getElementById('nomeComercio').value.trim();
+    const descricao = document.getElementById('descricao').value.trim();
 
-  // Adicionar feedback à lista na tela
-  addFeedbackToList(feedback);
+    if (nomeComercio === "" || descricao === "") {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
 
-  // Limpar o formulário
-  form.reset();
+    const feedback = { nomeComercio, descricao };
+
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(feedback),
+      });
+
+      if (response.ok) {
+        alert("Informação enviada com sucesso!");
+        addFeedbackToList(feedback); // Adiciona na lista local
+        form.reset(); // Limpa o formulário
+      } else {
+        alert("Falha ao enviar os dados. Tente novamente mais tarde.");
+        console.error("Erro no envio:", response.status, response.statusText);
+      }
+    } catch (error) {
+      alert("Erro ao conectar com o servidor.");
+      console.error("Erro ao conectar:", error);
+    }
+  });
+
+  // Adicionar um feedback à lista na página
+  function addFeedbackToList(feedback) {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <strong>${feedback.nomeComercio}:</strong>
+      <p>${feedback.descricao}</p>
+    `;
+    feedbackList.appendChild(li);
+  }
+
+  // Carregar feedbacks ao iniciar
+  carregarFeedbacks();
 });
-
-// Função para adicionar feedback à lista
-function addFeedbackToList(feedback) {
-  const li = document.createElement("li");
-  li.innerHTML = `
-    <strong>${feedback.nomeComercio}:</strong>
-    <p>${feedback.descricao}</p>
-  `;
-  feedbackList.appendChild(li);
-}
